@@ -4,8 +4,10 @@
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### Basic
+
+Just import this package in your file you want to use.
+Then, place `DateRangeCalendar` widget wherever you want to declare.
 
 ```dart
   void onTappedDay(DateTime? s, DateTime? e) {
