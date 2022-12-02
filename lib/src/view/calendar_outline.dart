@@ -73,70 +73,28 @@ class _CalendarOutlineState extends State<CalendarOutline> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              children: [
-                Material(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        final prevDateTime =
-                        DateTime(baseDateTime.year, baseDateTime.month - 1);
-                        baseDateTime = prevDateTime;
-                      });
-                    },
-                    borderRadius: BorderRadius.circular(8),
-                    child: Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black38),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(
-                        Icons.keyboard_arrow_left,
-                        color: Colors.black54,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-                Material(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        baseDateTime = nextDateTime;
-                      });
-                    },
-                    borderRadius: BorderRadius.circular(8),
-                    child: Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black38),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.black54,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
             /// Month Title
             ///
-            Container(
-              margin: const EdgeInsets.only(top: 18, bottom: 15),
-              child: Text(
-                '${getMonthString(baseDateTime)} ${baseDateTime.year}',
-                style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w300,
+            Row(
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: _buildPrevButton(),
+                  ),
                 ),
-              ),
+                Container(
+                  margin: const EdgeInsets.only(top: 18, bottom: 15),
+                  child: Text(
+                    '${getMonthString(baseDateTime)} ${baseDateTime.year}',
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                Expanded(child: Container()),
+              ],
             ),
 
             /// Dates Outline
@@ -149,15 +107,26 @@ class _CalendarOutlineState extends State<CalendarOutline> {
               onTapDay: onTapDay,
             ),
 
-            Container(
-              margin: const EdgeInsets.only(top: 18, bottom: 15),
-              child: Text(
-                '${getMonthString(nextDateTime)} ${nextDateTime.year}',
-                style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w300,
+            Row(
+              children: [
+                Expanded(child: Container()),
+                Container(
+                  margin: const EdgeInsets.only(top: 18, bottom: 15),
+                  child: Text(
+                    '${getMonthString(nextDateTime)} ${nextDateTime.year}',
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: _buildNextButton(nextDateTime),
+                  ),
+                ),
+              ],
             ),
 
             /// Dates Outline
@@ -170,6 +139,60 @@ class _CalendarOutlineState extends State<CalendarOutline> {
               onTapDay: onTapDay,
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNextButton(DateTime nextDateTime) {
+    return Material(
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            baseDateTime = nextDateTime;
+          });
+        },
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black38),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Icon(
+            Icons.keyboard_arrow_right,
+            color: Colors.black54,
+            size: 20,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrevButton() {
+    return Material(
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            final prevDateTime =
+                DateTime(baseDateTime.year, baseDateTime.month - 1);
+            baseDateTime = prevDateTime;
+          });
+        },
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black38),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Icon(
+            Icons.keyboard_arrow_left,
+            color: Colors.black54,
+            size: 20,
+          ),
         ),
       ),
     );
