@@ -1,6 +1,6 @@
 name: date_range_calendar
 description: date_range_calendar helps your app can pick a range of dates.
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/genbow3/flutter_date_range_calendar
 
 environment:
