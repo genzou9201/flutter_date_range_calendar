@@ -1,10 +1,11 @@
+import 'package:date_range_calendar/src/data/calendar_setup_data.dart';
+
 class CalendarRepository {
   static int? tappedDay;
   static DateTime? selectedStartDate;
   static DateTime? selectedEndDate;
 
   static void onTapDay(DateTime tappedDate) {
-    print('CalendarRepository.onTapDay()');
     if (selectedStartDate != null &&
         selectedEndDate == null &&
         tappedDate.isAtSameMomentAs(selectedStartDate!)) {
@@ -31,63 +32,32 @@ class CalendarRepository {
   }
 }
 
-String getMonthString(DateTime date) {
+String getMonthString(CalendarSetupData setupData, DateTime date) {
   switch (date.month) {
     case DateTime.january:
-      return 'January';
+      return setupData.monthLabelsData.jan;
     case DateTime.february:
-      return 'February';
+      return setupData.monthLabelsData.feb;
     case DateTime.march:
-      return 'March';
+      return setupData.monthLabelsData.mar;
     case DateTime.april:
-      return 'April';
+      return setupData.monthLabelsData.apr;
     case DateTime.may:
-      return 'May';
+      return setupData.monthLabelsData.may;
     case DateTime.june:
-      return 'June';
+      return setupData.monthLabelsData.jun;
     case DateTime.july:
-      return 'July';
+      return setupData.monthLabelsData.jul;
     case DateTime.august:
-      return 'August';
+      return setupData.monthLabelsData.aug;
     case DateTime.september:
-      return 'September';
+      return setupData.monthLabelsData.sep;
     case DateTime.october:
-      return 'October';
+      return setupData.monthLabelsData.oct;
     case DateTime.november:
-      return 'November';
+      return setupData.monthLabelsData.nov;
     case DateTime.december:
-      return 'December';
-    default:
-      return 'Null';
-  }
-}
-
-String getDayOfTheWeekString(DateTime date) {
-  switch (date.month) {
-    case DateTime.january:
-      return 'January';
-    case DateTime.february:
-      return 'February';
-    case DateTime.march:
-      return 'March';
-    case DateTime.april:
-      return 'April';
-    case DateTime.may:
-      return 'May';
-    case DateTime.june:
-      return 'June';
-    case DateTime.july:
-      return 'July';
-    case DateTime.august:
-      return 'August';
-    case DateTime.september:
-      return 'September';
-    case DateTime.october:
-      return 'October';
-    case DateTime.november:
-      return 'November';
-    case DateTime.december:
-      return 'December';
+      return setupData.monthLabelsData.dec;
     default:
       return 'Null';
   }

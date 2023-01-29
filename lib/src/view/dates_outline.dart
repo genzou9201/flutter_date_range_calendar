@@ -1,3 +1,4 @@
+import 'package:date_range_calendar/src/data/calendar_setup_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_range_calendar/src/view/dates_in_month.dart';
 import 'package:date_range_calendar/src/view/day_of_the_week.dart';
@@ -9,6 +10,7 @@ class DatesOutline extends StatelessWidget {
     required this.selectedStartDate,
     required this.selectedEndDate,
     required this.onTapDay,
+    required this.setupData,
     Key? key,
   }) : super(key: key);
 
@@ -17,6 +19,7 @@ class DatesOutline extends StatelessWidget {
   final DateTime? selectedStartDate;
   final DateTime? selectedEndDate;
   final Function(DateTime) onTapDay;
+  final CalendarSetupData setupData;
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +29,14 @@ class DatesOutline extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              DayOfTheWeek(label: 'Mon'),
-              DayOfTheWeek(label: 'Tue'),
-              DayOfTheWeek(label: 'Wed'),
-              DayOfTheWeek(label: 'Thu'),
-              DayOfTheWeek(label: 'Fri'),
-              DayOfTheWeek(label: 'Sat'),
-              DayOfTheWeek(label: 'Sun'),
+            children: [
+              DayOfTheWeek(label: setupData.dayOfTheWeekLabelsData.mon),
+              DayOfTheWeek(label: setupData.dayOfTheWeekLabelsData.tue),
+              DayOfTheWeek(label: setupData.dayOfTheWeekLabelsData.wed),
+              DayOfTheWeek(label: setupData.dayOfTheWeekLabelsData.thu),
+              DayOfTheWeek(label: setupData.dayOfTheWeekLabelsData.fri),
+              DayOfTheWeek(label: setupData.dayOfTheWeekLabelsData.sat),
+              DayOfTheWeek(label: setupData.dayOfTheWeekLabelsData.sun),
             ],
           ),
           const Divider(indent: 9, endIndent: 9, height: 9),
@@ -44,6 +47,7 @@ class DatesOutline extends StatelessWidget {
             selectedStartDate: selectedStartDate,
             selectedEndDate: selectedEndDate,
             onTapDay: onTapDay,
+            setupData: setupData,
           ),
 
           const SizedBox(height: 12),
