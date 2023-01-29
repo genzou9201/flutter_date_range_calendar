@@ -1,3 +1,7 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Published with minimal implementation
+
+## 0.1.0
+
+* Users can pass setup data such as styles when specifying widgets.
