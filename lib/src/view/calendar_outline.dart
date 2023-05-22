@@ -54,7 +54,6 @@ class _CalendarOutlineState extends State<CalendarOutline> {
             mainAxisSize: MainAxisSize.min,
             children: [
               /// Month Title
-              ///
               Row(
                 children: [
                   Expanded(
@@ -77,7 +76,6 @@ class _CalendarOutlineState extends State<CalendarOutline> {
               ),
 
               /// Dates Outline
-              ///
               DatesOutline(
                 year: baseDateTime.year,
                 month: baseDateTime.month,

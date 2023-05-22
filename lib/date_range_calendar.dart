@@ -35,4 +35,3 @@ class DateRangeCalendar extends StatelessWidget {
     );
   }
 }
-

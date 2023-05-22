@@ -5,8 +5,9 @@
   ![demo 0](https://github.com/genbow3/flutter_date_range_calendar/raw/main/assets/readme/demo-0.gif)
   ![demo 1](https://github.com/genbow3/flutter_date_range_calendar/raw/main/assets/readme/demo-1.gif)
 
-<br/>
-<br/>
+
+<br>
+<br>
 
 ## Usage
 
@@ -36,7 +37,7 @@ You need to pass a callback function `onTappedDay` of type `Function(DateTime?, 
   }
 ```
 
-<br/>
+<br>
 
 ### Custom
 
