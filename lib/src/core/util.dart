@@ -1,37 +1,5 @@
 import 'package:date_range_calendar/src/data/calendar_setup_data.dart';
 
-class CalendarRepository {
-  static int? tappedDay;
-  static DateTime? selectedStartDate;
-  static DateTime? selectedEndDate;
-
-  static void onTapDay(DateTime tappedDate) {
-    if (selectedStartDate != null &&
-        selectedEndDate == null &&
-        tappedDate.isAtSameMomentAs(selectedStartDate!)) {
-      selectedStartDate = null;
-      return;
-    }
-    if (selectedStartDate == null) {
-      selectedStartDate = tappedDate;
-      return;
-    }
-    if (tappedDate.isBefore(selectedStartDate!)) {
-      selectedStartDate = tappedDate;
-      return;
-    }
-    if (selectedEndDate != null &&
-        tappedDate.isAtSameMomentAs(selectedEndDate!)) {
-      selectedEndDate = null;
-      return;
-    }
-    if (tappedDate.isAfter(selectedStartDate!)) {
-      selectedEndDate = tappedDate;
-      return;
-    }
-  }
-}
-
 String getMonthString(CalendarSetupData setupData, DateTime date) {
   switch (date.month) {
     case DateTime.january:
