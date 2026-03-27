@@ -21,7 +21,7 @@ class DateRangeCalendar extends StatelessWidget {
   /// The first parameter is the selected start date, and the second is
   /// the selected end date. The end date is `null` until the user taps
   /// a second date after the start date.
-  final Function(DateTime?, DateTime?) onTappedDay;
+  final void Function(DateTime?, DateTime?) onTappedDay;
 
   /// Configuration for calendar appearance and localization.
   final CalendarSetupData setupData;
