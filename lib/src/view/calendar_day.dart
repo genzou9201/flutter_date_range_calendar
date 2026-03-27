@@ -52,6 +52,7 @@ class CalendarDayExist extends CalendarDay {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final style = setupData.dayCellStyle;
     var color = Colors.transparent;
 
@@ -88,20 +89,25 @@ class CalendarDayExist extends CalendarDay {
       ),
       height: CalendarDay.height,
       width: CalendarDay.width,
-      child: GestureDetector(
-        onTap: () => onTap(date),
-        child: Container(
-          color: Colors.transparent,
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              date.day.toString(),
-              style: TextStyle(
-                color: (isEndDay || isStartDay) ? Colors.white : Colors.black,
-                fontSize: _kDayFontSize,
-                fontWeight: FontWeight.w500,
+      child: Semantics(
+        label: '${date.month}/${date.day}',
+        selected: isStartDay || isEndDay,
+        button: true,
+        child: GestureDetector(
+          onTap: () => onTap(date),
+          child: Container(
+            color: Colors.transparent,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                date.day.toString(),
+                style: TextStyle(
+                  color: (isEndDay || isStartDay) ? colorScheme.onPrimary : colorScheme.onSurface,
+                  fontSize: _kDayFontSize,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
         ),
