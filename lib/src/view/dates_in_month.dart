@@ -2,6 +2,9 @@ import 'package:date_range_calendar/src/data/calendar_setup_data.dart';
 import 'package:flutter/material.dart';
 import 'package:date_range_calendar/src/view/calendar_day.dart';
 
+const double _kDividerIndent = 9;
+const double _kDividerHeight = 9;
+
 class DatesInMonth extends StatelessWidget {
   const DatesInMonth({
     required this.targetYear,
@@ -92,7 +95,7 @@ class DatesInMonth extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [...weekWidget],
           ),
-          const Divider(indent: 9, endIndent: 9, height: 9),
+          const Divider(indent: _kDividerIndent, endIndent: _kDividerIndent, height: _kDividerHeight),
         ]);
       }
       weekWidget.clear();

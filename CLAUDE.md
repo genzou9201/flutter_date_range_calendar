@@ -31,7 +31,7 @@ The public API is a single widget `DateRangeCalendar` (lib/date_range_calendar.d
 
 ### Key layers
 
-- **Data layer** (`lib/src/data/`): Configuration models (`CalendarSetupData`, `DayCellStyle`, `MonthLabelsData`, `DayOfTheWeekLabelsData`) and enums (`CalendarType`, `MonthLayoutType`). `CalendarStore` holds static selected date state.
+- **Data layer** (`lib/src/data/`): Configuration models (`CalendarSetupData`, `DayCellStyle`, `MonthLabelsData`, `DayOfTheWeekLabelsData`) and enums (`CalendarType`, `MonthLayoutType`).
 - **View layer** (`lib/src/view/`): Widget tree rooted at `CalendarOutline` (the only StatefulWidget — manages month navigation and date selection state via `setNewDates`). Renders `MonthTitle`, `DatesOutline`, and individual `CalendarDay` cells.
 - **Core** (`lib/src/core/util.dart`): Utility for month name resolution from `CalendarSetupData`.
 
