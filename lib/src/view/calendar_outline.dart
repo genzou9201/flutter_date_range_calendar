@@ -173,9 +173,11 @@ class _CalendarOutlineState extends State<CalendarOutline> {
 
   void setNewDates(DateTime tappedDate) {
     if (selectedStartDate != null &&
-        selectedEndDate == null &&
         tappedDate.isAtSameMomentAs(selectedStartDate!)) {
-      setState(() => selectedStartDate = null);
+      setState(() {
+        selectedStartDate = null;
+        selectedEndDate = null;
+      });
       return;
     }
     if (selectedStartDate == null) {
