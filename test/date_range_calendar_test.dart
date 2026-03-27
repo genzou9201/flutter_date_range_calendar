@@ -2,9 +2,7 @@ import 'package:date_range_calendar/date_range_calendar.dart';
 import 'package:date_range_calendar/src/core/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 
-@GenerateNiceMocks([MockSpec<CalendarSetupData>()])
 void main() {
   late CalendarSetupData testSetupData;
   late void Function(DateTime?, DateTime?) onTappedDay;
@@ -85,10 +83,6 @@ void main() {
       await widgetTester.pump();
       expect(find.text(calendarTitle), findsNothing);
     });
-
-    testWidgets('description', (widgetTester) async {
-      await widgetTester.pumpWidget(TestMyApp(onTappedDay: onTappedDay));
-    });
   });
 
   group('カスタムデータ：', () {
@@ -118,6 +112,216 @@ void main() {
       });
     });
   });
+
+  group('日付選択ロジック：', () {
+    // 2023年1月を固定で使用（1日は日曜日）
+    late CalendarSetupData setupData;
+
+    setUp(() {
+      setupData = CalendarSetupData(
+        initialMonth: DateTime(2023, 1),
+      );
+    });
+
+    testWidgets('日付タップで開始日が選択される', (widgetTester) async {
+      DateTime? capturedStart;
+      DateTime? capturedEnd;
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {
+          capturedStart = s;
+          capturedEnd = e;
+        },
+        setupData: setupData,
+      ));
+
+      await widgetTester.tap(find.text('10'));
+      await widgetTester.pump();
+
+      expect(capturedStart, DateTime(2023, 1, 10));
+      expect(capturedEnd, isNull);
+    });
+
+    testWidgets('開始日の後の日付タップで終了日が選択される', (widgetTester) async {
+      DateTime? capturedStart;
+      DateTime? capturedEnd;
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {
+          capturedStart = s;
+          capturedEnd = e;
+        },
+        setupData: setupData,
+      ));
+
+      await widgetTester.tap(find.text('10'));
+      await widgetTester.pump();
+      await widgetTester.tap(find.text('20'));
+      await widgetTester.pump();
+
+      expect(capturedStart, DateTime(2023, 1, 10));
+      expect(capturedEnd, DateTime(2023, 1, 20));
+    });
+
+    testWidgets('開始日を再タップで選択解除される', (widgetTester) async {
+      DateTime? capturedStart;
+      DateTime? capturedEnd;
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {
+          capturedStart = s;
+          capturedEnd = e;
+        },
+        setupData: setupData,
+      ));
+
+      await widgetTester.tap(find.text('10'));
+      await widgetTester.pump();
+      // 同じ日を再タップ
+      await widgetTester.tap(find.text('10'));
+      await widgetTester.pump();
+
+      expect(capturedStart, isNull);
+      expect(capturedEnd, isNull);
+    });
+
+    testWidgets('終了日を再タップで終了日のみ解除される', (widgetTester) async {
+      DateTime? capturedStart;
+      DateTime? capturedEnd;
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {
+          capturedStart = s;
+          capturedEnd = e;
+        },
+        setupData: setupData,
+      ));
+
+      // 開始日→終了日を設定
+      await widgetTester.tap(find.text('10'));
+      await widgetTester.pump();
+      await widgetTester.tap(find.text('20'));
+      await widgetTester.pump();
+
+      // 終了日を再タップ
+      await widgetTester.tap(find.text('20'));
+      await widgetTester.pump();
+
+      expect(capturedStart, DateTime(2023, 1, 10));
+      expect(capturedEnd, isNull);
+    });
+
+    testWidgets('開始日より前の日付タップで開始日がリセットされる', (widgetTester) async {
+      DateTime? capturedStart;
+      DateTime? capturedEnd;
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {
+          capturedStart = s;
+          capturedEnd = e;
+        },
+        setupData: setupData,
+      ));
+
+      await widgetTester.tap(find.text('15'));
+      await widgetTester.pump();
+      // 開始日より前をタップ
+      await widgetTester.tap(find.text('5'));
+      await widgetTester.pump();
+
+      expect(capturedStart, DateTime(2023, 1, 5));
+      expect(capturedEnd, isNull);
+    });
+  });
+
+  group('ダブルマンスレイアウト：', () {
+    testWidgets('2ヶ月分のタイトルが表示される', (widgetTester) async {
+      final setupData = CalendarSetupData(
+        initialMonth: DateTime(2023, 1),
+      );
+
+      await widgetTester.pumpWidget(MaterialApp(
+        home: SafeArea(
+          child: SingleChildScrollView(
+            child: DateRangeCalendar(
+              calendarType: CalendarType.doubleMonth,
+              onTappedDay: (s, e) {},
+              setupData: setupData,
+            ),
+          ),
+        ),
+      ));
+
+      expect(find.text('January 2023'), findsOneWidget);
+      expect(find.text('February 2023'), findsOneWidget);
+    });
+  });
+
+  group('エッジケース：', () {
+    testWidgets('2月は28日まで表示される（平年）', (widgetTester) async {
+      final setupData = CalendarSetupData(
+        initialMonth: DateTime(2023, 2),
+      );
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {},
+        setupData: setupData,
+      ));
+
+      expect(find.text('28'), findsOneWidget);
+      expect(find.text('29'), findsNothing);
+    });
+
+    testWidgets('2月は29日まで表示される（うるう年）', (widgetTester) async {
+      final setupData = CalendarSetupData(
+        initialMonth: DateTime(2024, 2),
+      );
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {},
+        setupData: setupData,
+      ));
+
+      expect(find.text('29'), findsOneWidget);
+      expect(find.text('30'), findsNothing);
+    });
+
+    testWidgets('年をまたぐ月送り（12月→1月）', (widgetTester) async {
+      final setupData = CalendarSetupData(
+        initialMonth: DateTime(2023, 12),
+      );
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {},
+        setupData: setupData,
+      ));
+
+      expect(find.text('December 2023'), findsOneWidget);
+
+      await widgetTester.tap(find.byIcon(Icons.keyboard_arrow_right));
+      await widgetTester.pump();
+
+      expect(find.text('January 2024'), findsOneWidget);
+    });
+
+    testWidgets('年をまたぐ月戻り（1月→12月）', (widgetTester) async {
+      final setupData = CalendarSetupData(
+        initialMonth: DateTime(2024, 1),
+      );
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {},
+        setupData: setupData,
+      ));
+
+      expect(find.text('January 2024'), findsOneWidget);
+
+      await widgetTester.tap(find.byIcon(Icons.keyboard_arrow_left));
+      await widgetTester.pump();
+
+      expect(find.text('December 2023'), findsOneWidget);
+    });
+  });
 }
 
 class TestMyApp extends StatelessWidget {
@@ -130,7 +334,6 @@ class TestMyApp extends StatelessWidget {
   final void Function(DateTime?, DateTime?) onTappedDay;
   final CalendarSetupData setupData;
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

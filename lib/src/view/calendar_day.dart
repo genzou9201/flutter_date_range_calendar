@@ -1,6 +1,9 @@
 import 'package:date_range_calendar/src/data/calendar_setup_data.dart';
 import 'package:flutter/material.dart';
 
+const double _kDayFontSize = 14;
+const double _kTodayBorderWidth = 1;
+
 abstract class CalendarDay extends StatelessWidget {
   const CalendarDay({super.key});
 
@@ -76,7 +79,7 @@ class CalendarDayExist extends CalendarDay {
       decoration: BoxDecoration(
         color: color,
         border: isUnselectedToday
-            ? Border.all(color: style.borderColorOfToday, width: 1)
+            ? Border.all(color: style.borderColorOfToday, width: _kTodayBorderWidth)
             : null,
         borderRadius: BorderRadius.horizontal(
           left: leftRadius,
@@ -95,7 +98,7 @@ class CalendarDayExist extends CalendarDay {
               date.day.toString(),
               style: TextStyle(
                 color: (isEndDay || isStartDay) ? Colors.white : Colors.black,
-                fontSize: 14,
+                fontSize: _kDayFontSize,
                 fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,

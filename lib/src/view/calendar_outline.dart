@@ -4,6 +4,12 @@ import 'package:date_range_calendar/src/view/dates_outline.dart';
 import 'package:date_range_calendar/src/view/month_title.dart';
 import 'package:flutter/material.dart';
 
+const double _kCalendarWidth = 330;
+const double _kElevation = 9;
+const double _kNavButtonSize = 36;
+const double _kNavIconSize = 20;
+const double _kNavButtonBorderRadius = 4;
+
 class CalendarOutline extends StatefulWidget {
   const CalendarOutline({
     required this.onTappedDay,
@@ -46,9 +52,9 @@ class _CalendarOutlineState extends State<CalendarOutline> {
 
     if (widget.calendarType == CalendarType.singleMonth) {
       return Material(
-        elevation: 9,
+        elevation: _kElevation,
         child: Container(
-          width: 330,
+          width: _kCalendarWidth,
           color: widget.backgroundColor,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -92,9 +98,9 @@ class _CalendarOutlineState extends State<CalendarOutline> {
 
     if (widget.calendarType == CalendarType.doubleMonth) {
       return Material(
-        elevation: 9,
+        elevation: _kElevation,
         child: Container(
-          width: 330,
+          width: _kCalendarWidth,
           color: widget.backgroundColor,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -203,14 +209,14 @@ class _CalendarOutlineState extends State<CalendarOutline> {
             baseDateTime = nextDateTime;
           });
         },
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(_kNavButtonBorderRadius),
         child: const SizedBox(
-          width: 36,
-          height: 36,
+          width: _kNavButtonSize,
+          height: _kNavButtonSize,
           child: Icon(
             Icons.keyboard_arrow_right,
             color: Colors.black54,
-            size: 20,
+            size: _kNavIconSize,
           ),
         ),
       ),
@@ -228,14 +234,14 @@ class _CalendarOutlineState extends State<CalendarOutline> {
             baseDateTime = prevDateTime;
           });
         },
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(_kNavButtonBorderRadius),
         child: const SizedBox(
-          width: 36,
-          height: 36,
+          width: _kNavButtonSize,
+          height: _kNavButtonSize,
           child: Icon(
             Icons.keyboard_arrow_left,
             color: Colors.black54,
-            size: 20,
+            size: _kNavIconSize,
           ),
         ),
       ),
