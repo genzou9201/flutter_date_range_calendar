@@ -1,0 +1,6 @@
+CLAUDE.md
+plan/
+coverage/
+build/
+example/build/
+*.iml

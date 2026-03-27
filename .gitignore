@@ -28,3 +28,8 @@ migrate_working_dir/
 .dart_tool/
 .packages
 build/
+
+# Project-local files (not for publication)
+CLAUDE.md
+plan/
+coverage/
