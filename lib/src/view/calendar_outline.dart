@@ -4,16 +4,22 @@ import 'package:date_range_calendar/src/view/dates_outline.dart';
 import 'package:date_range_calendar/src/view/month_title.dart';
 import 'package:flutter/material.dart';
 
+const double _kCalendarWidth = 330;
+const double _kElevation = 9;
+const double _kNavButtonSize = 36;
+const double _kNavIconSize = 20;
+const double _kNavButtonBorderRadius = 4;
+
 class CalendarOutline extends StatefulWidget {
   const CalendarOutline({
     required this.onTappedDay,
     required this.calendarType,
     required this.setupData,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
     super.key,
   });
 
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final CalendarType calendarType;
   final void Function(DateTime?, DateTime?) onTappedDay;
   final CalendarSetupData setupData;
@@ -42,14 +48,16 @@ class _CalendarOutlineState extends State<CalendarOutline> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final bgColor = widget.backgroundColor ?? colorScheme.surface;
     final nextDateTime = DateTime(baseDateTime.year, baseDateTime.month + 1);
 
     if (widget.calendarType == CalendarType.singleMonth) {
       return Material(
-        elevation: 9,
+        elevation: _kElevation,
         child: Container(
-          width: 330,
-          color: widget.backgroundColor,
+          width: _kCalendarWidth,
+          color: bgColor,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -59,7 +67,7 @@ class _CalendarOutlineState extends State<CalendarOutline> {
                   Expanded(
                     child: Align(
                       alignment: Alignment.center,
-                      child: _buildPrevButton(),
+                      child: _buildPrevButton(colorScheme),
                     ),
                   ),
                   MonthTitle(
@@ -69,7 +77,7 @@ class _CalendarOutlineState extends State<CalendarOutline> {
                   Expanded(
                     child: Align(
                       alignment: Alignment.center,
-                      child: _buildNextButton(nextDateTime),
+                      child: _buildNextButton(nextDateTime, colorScheme),
                     ),
                   ),
                 ],
@@ -92,10 +100,10 @@ class _CalendarOutlineState extends State<CalendarOutline> {
 
     if (widget.calendarType == CalendarType.doubleMonth) {
       return Material(
-        elevation: 9,
+        elevation: _kElevation,
         child: Container(
-          width: 330,
-          color: widget.backgroundColor,
+          width: _kCalendarWidth,
+          color: bgColor,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -106,7 +114,7 @@ class _CalendarOutlineState extends State<CalendarOutline> {
                   Expanded(
                     child: Align(
                       alignment: Alignment.center,
-                      child: _buildPrevButton(),
+                      child: _buildPrevButton(colorScheme),
                     ),
                   ),
                   MonthTitle(
@@ -138,7 +146,7 @@ class _CalendarOutlineState extends State<CalendarOutline> {
                   Expanded(
                     child: Align(
                       alignment: Alignment.center,
-                      child: _buildNextButton(nextDateTime),
+                      child: _buildNextButton(nextDateTime, colorScheme),
                     ),
                   ),
                 ],
@@ -165,9 +173,11 @@ class _CalendarOutlineState extends State<CalendarOutline> {
 
   void setNewDates(DateTime tappedDate) {
     if (selectedStartDate != null &&
-        selectedEndDate == null &&
         tappedDate.isAtSameMomentAs(selectedStartDate!)) {
-      setState(() => selectedStartDate = null);
+      setState(() {
+        selectedStartDate = null;
+        selectedEndDate = null;
+      });
       return;
     }
     if (selectedStartDate == null) {
@@ -194,48 +204,56 @@ class _CalendarOutlineState extends State<CalendarOutline> {
     widget.onTappedDay(selectedStartDate, selectedEndDate);
   }
 
-  Widget _buildNextButton(DateTime nextDateTime) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            baseDateTime = nextDateTime;
-          });
-        },
-        borderRadius: BorderRadius.circular(4),
-        child: const SizedBox(
-          width: 36,
-          height: 36,
-          child: Icon(
-            Icons.keyboard_arrow_right,
-            color: Colors.black54,
-            size: 20,
+  Widget _buildNextButton(DateTime nextDateTime, ColorScheme colorScheme) {
+    return Semantics(
+      label: 'Next month',
+      button: true,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              baseDateTime = nextDateTime;
+            });
+          },
+          borderRadius: BorderRadius.circular(_kNavButtonBorderRadius),
+          child: SizedBox(
+            width: _kNavButtonSize,
+            height: _kNavButtonSize,
+            child: Icon(
+              Icons.keyboard_arrow_right,
+              color: colorScheme.onSurface,
+              size: _kNavIconSize,
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildPrevButton() {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            final prevDateTime =
-                DateTime(baseDateTime.year, baseDateTime.month - 1);
-            baseDateTime = prevDateTime;
-          });
-        },
-        borderRadius: BorderRadius.circular(4),
-        child: const SizedBox(
-          width: 36,
-          height: 36,
-          child: Icon(
-            Icons.keyboard_arrow_left,
-            color: Colors.black54,
-            size: 20,
+  Widget _buildPrevButton(ColorScheme colorScheme) {
+    return Semantics(
+      label: 'Previous month',
+      button: true,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              final prevDateTime =
+                  DateTime(baseDateTime.year, baseDateTime.month - 1);
+              baseDateTime = prevDateTime;
+            });
+          },
+          borderRadius: BorderRadius.circular(_kNavButtonBorderRadius),
+          child: SizedBox(
+            width: _kNavButtonSize,
+            height: _kNavButtonSize,
+            child: Icon(
+              Icons.keyboard_arrow_left,
+              color: colorScheme.onSurface,
+              size: _kNavIconSize,
+            ),
           ),
         ),
       ),

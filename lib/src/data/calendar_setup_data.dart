@@ -124,33 +124,6 @@ class DayCellStyle {
   final Radius borderRadius;
 }
 
-/// Style configuration for the calendar outline container.
-class CalendarOutlineStyle {
-  /// Creates a [CalendarOutlineStyle] with the given properties.
-  const CalendarOutlineStyle({
-    required this.backgroundColor,
-    required this.elevation,
-    required this.margin,
-    required this.padding,
-    required this.width,
-  });
-
-  /// Background color of the calendar container.
-  final Color backgroundColor;
-
-  /// Elevation (shadow depth) of the calendar container.
-  final double elevation;
-
-  /// Outer margin of the calendar container.
-  final EdgeInsets margin;
-
-  /// Inner padding of the calendar container.
-  final EdgeInsets padding;
-
-  /// Width of the calendar container.
-  final double width;
-}
-
 /// Top-level configuration for [DateRangeCalendar] appearance and behavior.
 ///
 /// Pass an instance to `DateRangeCalendar.setupData` to customize
