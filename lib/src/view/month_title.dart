@@ -7,8 +7,8 @@ class MonthTitle extends StatelessWidget {
   const MonthTitle({
     required this.baseDate,
     required this.setupData,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final DateTime baseDate;
   final CalendarSetupData setupData;

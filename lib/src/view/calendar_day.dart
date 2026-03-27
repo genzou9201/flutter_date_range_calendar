@@ -15,7 +15,7 @@ abstract class CalendarDay extends StatelessWidget {
 /// as 1st day.
 ///
 class CalendarDayEmpty extends CalendarDay {
-  const CalendarDayEmpty({Key? key}) : super(key: key);
+  const CalendarDayEmpty({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +35,8 @@ class CalendarDayExist extends CalendarDay {
     required this.isToday,
     required this.setupData,
     this.onTap = CalendarDay.noCallback,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final DateTime date;
   final bool isEndDay;
