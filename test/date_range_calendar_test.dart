@@ -211,6 +211,32 @@ void main() {
       expect(capturedEnd, isNull);
     });
 
+    testWidgets('開始日と終了日が選択済みの状態で開始日を再タップで全解除される', (widgetTester) async {
+      DateTime? capturedStart;
+      DateTime? capturedEnd;
+
+      await widgetTester.pumpWidget(TestMyApp(
+        onTappedDay: (s, e) {
+          capturedStart = s;
+          capturedEnd = e;
+        },
+        setupData: setupData,
+      ));
+
+      // 開始日→終了日を設定
+      await widgetTester.tap(find.text('10'));
+      await widgetTester.pump();
+      await widgetTester.tap(find.text('20'));
+      await widgetTester.pump();
+
+      // 開始日を再タップ
+      await widgetTester.tap(find.text('10'));
+      await widgetTester.pump();
+
+      expect(capturedStart, isNull);
+      expect(capturedEnd, isNull);
+    });
+
     testWidgets('開始日より前の日付タップで開始日がリセットされる', (widgetTester) async {
       DateTime? capturedStart;
       DateTime? capturedEnd;
