@@ -11,8 +11,8 @@ class DatesOutline extends StatelessWidget {
     required this.selectedEndDate,
     required this.onTapDay,
     required this.setupData,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int year;
   final int month;

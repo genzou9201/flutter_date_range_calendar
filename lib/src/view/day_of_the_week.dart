@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DayOfTheWeek extends StatelessWidget {
-  const DayOfTheWeek({required this.label, Key? key}) : super(key: key);
+  const DayOfTheWeek({required this.label, super.key});
 
   final String label;
 

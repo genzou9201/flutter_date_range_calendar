@@ -1,3 +1,11 @@
+## 1.0.0
+
+* **BREAKING**: Require Dart SDK >=3.0.0 and Flutter >=3.10.0.
+* Migrate to `super.key` constructor syntax (Dart 3 super parameters).
+* Update `flutter_lints` to v6, `mockito` and `build_runner` to latest.
+* Convert `getMonthString` to Dart 3 switch expression.
+* Remove unnecessary `library` directive.
+
 ## 0.1.2
 
 * Update .gif files in [README.md].

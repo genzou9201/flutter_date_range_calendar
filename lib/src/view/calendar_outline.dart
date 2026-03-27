@@ -10,12 +10,12 @@ class CalendarOutline extends StatefulWidget {
     required this.calendarType,
     required this.setupData,
     this.backgroundColor = Colors.white,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Color backgroundColor;
   final CalendarType calendarType;
-  final Function(DateTime?, DateTime?) onTappedDay;
+  final void Function(DateTime?, DateTime?) onTappedDay;
   final CalendarSetupData setupData;
 
   @override

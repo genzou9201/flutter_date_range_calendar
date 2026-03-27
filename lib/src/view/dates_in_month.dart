@@ -10,8 +10,8 @@ class DatesInMonth extends StatelessWidget {
     required this.selectedEndDate,
     required this.onTapDay,
     required this.setupData,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int targetYear;
   final int targetMonth;
