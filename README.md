@@ -29,52 +29,64 @@ flutter pub add date_range_calendar
 
 ```dart
 import 'package:date_range_calendar/date_range_calendar.dart';
+import 'package:flutter/material.dart';
 
-void onTappedDay(DateTime? s, DateTime? e) {
-  print('$s, $e');
-}
+class BasicCalendarExample extends StatelessWidget {
+  const BasicCalendarExample({super.key});
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: Center(
-      child: DateRangeCalendar(
-        onTappedDay: onTappedDay,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: DateRangeCalendar(
+          onTappedDay: (start, end) {
+            print('Selected range: $start - $end');
+          },
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 ```
 
 ### Custom
 
 ```dart
-final mySetupData = CalendarSetupData(
-  dayCellStyle: const DayCellStyle(
-    backgroundColorOfStartDay: Colors.blue,
-    backgroundColorOfEndDay: Colors.red,
-    backgroundColorOfBetweenDay: Colors.yellow,
-    borderColorOfToday: Colors.purple,
-    borderRadius: Radius.circular(6),
-  ),
-  monthLayoutType: MonthLayoutType.yearMonth,
-  monthTitleYearUnit: '年',
-  monthLabelsData: const MonthLabelsData(jan: '1月', feb: '2月'),
-  dayOfTheWeekLabelsData: const DayOfTheWeekLabelsData(
-    mon: '月', tue: '火', wed: '水', thu: '木', fri: '金', sat: '土', sun: '日'),
-  initialMonth: DateTime(2023, 1),
-);
+import 'package:date_range_calendar/date_range_calendar.dart';
+import 'package:flutter/material.dart';
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: Center(
-      child: DateRangeCalendar(
-        onTappedDay: onTappedDay,
-        setupData: mySetupData,
+class CustomCalendarExample extends StatelessWidget {
+  const CustomCalendarExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final mySetupData = CalendarSetupData(
+      dayCellStyle: const DayCellStyle(
+        backgroundColorOfStartDay: Colors.blue,
+        backgroundColorOfEndDay: Colors.red,
+        backgroundColorOfBetweenDay: Colors.yellow,
+        borderColorOfToday: Colors.purple,
+        borderRadius: Radius.circular(6),
       ),
-    ),
-  );
+      monthLayoutType: MonthLayoutType.yearMonth,
+      monthTitleYearUnit: '年',
+      monthLabelsData: const MonthLabelsData(jan: '1月', feb: '2月'),
+      dayOfTheWeekLabelsData: const DayOfTheWeekLabelsData(
+        mon: '月', tue: '火', wed: '水', thu: '木', fri: '金', sat: '土', sun: '日'),
+      initialMonth: DateTime(2023, 1),
+    );
+
+    return Scaffold(
+      body: Center(
+        child: DateRangeCalendar(
+          onTappedDay: (start, end) {
+            print('Selected range: $start - $end');
+          },
+          setupData: mySetupData,
+        ),
+      ),
+    );
+  }
 }
 ```
 
