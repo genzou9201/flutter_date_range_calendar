@@ -14,5 +14,5 @@ String getMonthString(CalendarSetupData setupData, DateTime date) =>
       DateTime.october => setupData.monthLabelsData.oct,
       DateTime.november => setupData.monthLabelsData.nov,
       DateTime.december => setupData.monthLabelsData.dec,
-      _ => 'Null',
+      _ => throw ArgumentError('Invalid month: ${date.month}'),
     };

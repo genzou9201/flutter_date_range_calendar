@@ -7,7 +7,7 @@ import 'package:mockito/annotations.dart';
 @GenerateNiceMocks([MockSpec<CalendarSetupData>()])
 void main() {
   late CalendarSetupData testSetupData;
-  late Function(DateTime?, DateTime?) onTappedDay;
+  late void Function(DateTime?, DateTime?) onTappedDay;
 
   setUp(() {
     testSetupData = CalendarSetupData(
@@ -127,7 +127,7 @@ class TestMyApp extends StatelessWidget {
     super.key,
   });
 
-  final Function(DateTime?, DateTime?) onTappedDay;
+  final void Function(DateTime?, DateTime?) onTappedDay;
   final CalendarSetupData setupData;
 
   // This widget is the root of your application.

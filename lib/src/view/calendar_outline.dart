@@ -15,7 +15,7 @@ class CalendarOutline extends StatefulWidget {
 
   final Color backgroundColor;
   final CalendarType calendarType;
-  final Function(DateTime?, DateTime?) onTappedDay;
+  final void Function(DateTime?, DateTime?) onTappedDay;
   final CalendarSetupData setupData;
 
   @override
